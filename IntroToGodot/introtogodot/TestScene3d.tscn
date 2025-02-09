@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://bifmcsaeimdrj"]
+
+[ext_resource type="PackedScene" uid="uid://uj4nbg3nnftj" path="res://snow.tscn" id="1_xosbl"]
+[ext_resource type="Material" uid="uid://ojqrqvm60rkg" path="res://Materials/Smiley.tres" id="2_7hr8l"]
+[ext_resource type="Material" uid="uid://rukl6e73vhat" path="res://Materials/Blue.tres" id="2_jstxi"]
+[ext_resource type="Material" uid="uid://ypldvwddhere" path="res://Materials/Pink.tres" id="3_78q1e"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_qph8q"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_28q6c"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Snow" parent="." instance=ExtResource("1_xosbl")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.00246, 0.707919, 0.592412)
+material_override = ExtResource("2_7hr8l")
+mesh = SubResource("SphereMesh_qph8q")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.54242, 0.696431, 0.702168)
+material_override = ExtResource("2_jstxi")
+mesh = SubResource("SphereMesh_qph8q")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.121835, 0.99255, 0, -0.99255, 0.121835, 5.96664, 0.632336, 0.802202)
+material_override = ExtResource("3_78q1e")
+mesh = SubResource("SphereMesh_qph8q")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8172, 0.571599, 0.0738807, 0.0081109, -0.116768, 0.993126, 0.576297, 0.812182, 0.0907867, 4.6808, 3.53411, -1.25723)
+light_energy = 0.69
+light_volumetric_fog_energy = 0.0
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(18.126, 0, 0, 0, 0.0822853, 0, 0, 0, 27.7122, 2.61528, -0.159081, -1.41309)
+mesh = SubResource("BoxMesh_28q6c")

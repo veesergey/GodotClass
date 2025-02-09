@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuiwfxhm52j47"]
+
+[ext_resource type="Texture2D" uid="uid://bqg1oqotq8kbt" path="res://Sprites/Player.png" id="1_io26q"]
+[ext_resource type="Texture2D" uid="uid://qjdtqxo00u5s" path="res://Sprites/Coin.png" id="2_sqx3x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_axq3w"]
+size = Vector2(53, 66)
+
+[node name="Player2" type="Sprite2D"]
+modulate = Color(1, 0.0666667, 1, 1)
+position = Vector2(1, -49)
+texture = ExtResource("1_io26q")
+
+[node name="Coin" type="Sprite2D" parent="."]
+position = Vector2(1, -50)
+texture = ExtResource("2_sqx3x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 15)
+shape = SubResource("RectangleShape2D_axq3w")
