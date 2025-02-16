@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bo83uidilf8mp"]
+
+[ext_resource type="Texture2D" uid="uid://sp7qn0qnxwf1" path="res://Assets-TappyPlane/Coin.png" id="1_td8sj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v74bc"]
+radius = 91.022
+
+[node name="Coin" type="Area2D" groups=["DynamicObjects"]]
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_td8sj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D"]
+shape = SubResource("CircleShape2D_v74bc")

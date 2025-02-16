@@ -1,18 +1,41 @@
-[gd_scene load_steps=7 format=3 uid="uid://c1jtwphp1a67n"]
+[gd_scene load_steps=13 format=3 uid="uid://c1jtwphp1a67n"]
 
 [ext_resource type="Script" path="res://Background.gd" id="1_4d7cb"]
 [ext_resource type="Script" path="res://Main.gd" id="1_dpg0q"]
 [ext_resource type="Texture2D" uid="uid://c5v5yeegraoh7" path="res://Assets-TappyPlane/Background.png" id="2_70t36"]
 [ext_resource type="Script" path="res://Player.gd" id="4_f5ayv"]
 [ext_resource type="Texture2D" uid="uid://dsj675w6xon5k" path="res://Assets-TappyPlane/Player.png" id="5_eylsn"]
+[ext_resource type="FontFile" uid="uid://b428wob75aear" path="res://Assets-TappyPlane/kenvector_future.ttf" id="6_fywbq"]
+[ext_resource type="PackedScene" uid="uid://cvuakyif24yvg" path="res://Obstacle.tscn" id="7_hiam8"]
+[ext_resource type="PackedScene" uid="uid://bo83uidilf8mp" path="res://Coin.tscn" id="8_3u4vb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1cwlg"]
 radius = 35.171
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aijwp"]
+size = Vector2(1600, 20)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5xb5"]
+bg_color = Color(0.234155, 0.349768, 0.390349, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tnen4"]
+bg_color = Color(0.133333, 0.658824, 0.454902, 1)
+
 [node name="Main" type="Node"]
 script = ExtResource("1_dpg0q")
+obstacle = ExtResource("7_hiam8")
+coin = ExtResource("8_3u4vb")
+
+[node name="SpawnerTimer" type="Timer" parent="."]
+wait_time = 0.75
+autostart = true
+
+[node name="CoinTimer" type="Timer" parent="."]
+wait_time = 1.125
+autostart = true
 
 [node name="Background" type="Node2D" parent="." groups=["DynamicObjects"]]
+z_index = -5
 position = Vector2(0, 482)
 scale = Vector2(2, 2)
 script = ExtResource("1_4d7cb")
@@ -29,6 +52,7 @@ texture = ExtResource("2_70t36")
 position = Vector2(125, 480)
 mass = 2.2
 gravity_scale = 1.6
+continuous_cd = 1
 script = ExtResource("4_f5ayv")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -36,3 +60,50 @@ texture = ExtResource("5_eylsn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource("CircleShape2D_1cwlg")
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
+
+[node name="Ceiling" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(800, 65)
+shape = SubResource("RectangleShape2D_aijwp")
+
+[node name="Floor" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(800, 969)
+shape = SubResource("RectangleShape2D_aijwp")
+
+[node name="UI" type="Control" parent="."]
+top_level = true
+z_index = 5
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthBar" type="ProgressBar" parent="UI"]
+layout_mode = 0
+offset_right = 1600.0
+offset_bottom = 68.0
+theme_override_styles/background = SubResource("StyleBoxFlat_x5xb5")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tnen4")
+value = 100.0
+show_percentage = false
+
+[node name="ScoreLabel" type="Label" parent="UI/HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_fywbq")
+theme_override_font_sizes/font_size = 45
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="SpawnerTimer" to="." method="_on_spawner_timer_timeout"]
+[connection signal="timeout" from="CoinTimer" to="." method="_on_coin_timer_timeout"]
