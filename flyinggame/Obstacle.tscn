@@ -8,5 +8,5 @@ scale = Vector2(1.5, 1.5)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_k6tqa")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-52, -118, 54, -118, 12, 120)
