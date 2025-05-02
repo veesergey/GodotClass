@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://da5o1wlhoqyf5"]
+
+[ext_resource type="Texture2D" uid="uid://c84xlho5potdb" path="res://Bullet-Hell-Assets/player.png" id="1_sqfvs"]
+[ext_resource type="Script" path="res://Scripts/Player/player.gd" id="1_v61yn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3xtrw"]
+size = Vector2(10, 15)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_v61yn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_3xtrw")
+
+[node name="Player" type="Sprite2D" parent="."]
+texture = ExtResource("1_sqfvs")
+flip_h = true
+hframes = 3
+frame = 1
+
+[node name="Bullets" type="Node" parent="."]
