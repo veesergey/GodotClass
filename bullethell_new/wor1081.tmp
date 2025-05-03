@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://dk2jd6rmtcns0"]
+[gd_scene load_steps=25 format=4 uid="uid://dk2jd6rmtcns0"]
 
 [ext_resource type="Texture2D" uid="uid://bsi62eet4fc77" path="res://Bullet-Hell-Assets/floor tiles/cobble_blood_1_old.png" id="1_ms4tr"]
 [ext_resource type="Script" path="res://world.gd" id="1_yxcfy"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://fr2vsqmam0re" path="res://Bullet-Hell-Assets/floor tiles/floor_sand_stone_4.png" id="8_4mnlb"]
 [ext_resource type="Texture2D" uid="uid://bp25gt8pbyoei" path="res://Bullet-Hell-Assets/floor tiles/floor_sand_stone_5.png" id="9_lps8p"]
 [ext_resource type="PackedScene" uid="uid://da5o1wlhoqyf5" path="res://player/player.tscn" id="10_2dvbe"]
+[ext_resource type="PackedScene" uid="uid://se4puy8ojykb" path="res://AI/snake_mob.tscn" id="11_kf52k"]
 [ext_resource type="Script" path="res://Scripts/AI/MobPooling.gd" id="13_3v3c4"]
 [ext_resource type="Texture2D" uid="uid://biyu2e25gf27a" path="res://Bullet-Hell-Assets/spawner.png" id="14_87euy"]
 
@@ -83,13 +84,8 @@ metadata/_edit_lock_ = true
 [node name="Player" parent="." instance=ExtResource("10_2dvbe")]
 position = Vector2(288, 170)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(1.25, 1.25)
-limit_left = 0
-limit_top = 0
-limit_right = 1250
-limit_bottom = 700
-position_smoothing_enabled = true
+[node name="SnakeMob" parent="." instance=ExtResource("11_kf52k")]
+position = Vector2(401, 315)
 
 [node name="Portal" type="Node2D" parent="."]
 position = Vector2(189, 284)
@@ -101,6 +97,5 @@ texture = ExtResource("14_87euy")
 
 [node name="Timer" type="Timer" parent="Portal"]
 wait_time = 2.0
-autostart = true
 
 [connection signal="timeout" from="Portal/Timer" to="Portal" method="_on_timer_timeout"]

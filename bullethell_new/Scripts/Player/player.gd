@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var speed: int = 75
 var direction: Vector2 = Vector2(0,1)
-@onready var bullet = preload("res://player/bullet.tscn")
+@onready var bullet_pool = get_node("Bullets")
 
 
 func _physics_process(delta: float) -> void:
@@ -27,11 +27,12 @@ func _physics_process(delta: float) -> void:
 		get_node("Player").frame = 0
 		direction = inputDir
 	
+	get_node("SpawnPoint").position = direction * 5
 	if Input.is_action_just_pressed("Shoot"):
-		var bulletTemp = bullet.instantiate()
+		var bulletTemp: Node = bullet_pool.get_bullet()
 		bulletTemp.velocity = direction * 100
-		get_node("Bullets").add_child(bulletTemp)
-	
+		bulletTemp.global_position = get_node("SpawnPoint").global_position
+		bulletTemp.show()
+			
 	velocity = inputDir * speed
 	move_and_slide()
-	print(inputDir)
