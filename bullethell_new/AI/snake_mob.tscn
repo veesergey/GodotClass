@@ -1,10 +1,44 @@
-[gd_scene load_steps=4 format=3 uid="uid://se4puy8ojykb"]
+[gd_scene load_steps=13 format=3 uid="uid://se4puy8ojykb"]
 
 [ext_resource type="Script" path="res://Scripts/AI/snake_mob.gd" id="1_fjm70"]
 [ext_resource type="Texture2D" uid="uid://bf0xp3bmc24sj" path="res://Bullet-Hell-Assets/monster sprites/guardian_serpent_old.png" id="2_5letq"]
+[ext_resource type="Texture2D" uid="uid://d248gdywl0o4q" path="res://Bullet-Hell-Assets/enemy death animation/enemy_death_0.png" id="3_gjnwq"]
+[ext_resource type="Texture2D" uid="uid://1efcqlx5m2hc" path="res://Bullet-Hell-Assets/enemy death animation/enemy_death_1.png" id="4_icu2q"]
+[ext_resource type="Texture2D" uid="uid://bylguukjibrcl" path="res://Bullet-Hell-Assets/enemy death animation/enemy_death_2.png" id="5_bpyd6"]
+[ext_resource type="Texture2D" uid="uid://dw8bmoyxptaq7" path="res://Bullet-Hell-Assets/enemy death animation/enemy_death_3.png" id="6_gyv8h"]
+[ext_resource type="Script" path="res://Scripts/AI/AIBulletPool.gd" id="7_edeuw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqh8k"]
 size = Vector2(26, 31)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cabko"]
+bg_color = Color(0.874851, 0, 0.116831, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4mho"]
+bg_color = Color(0, 0.709804, 0.164706, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kmr3f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_gjnwq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_icu2q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bpyd6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gyv8h")
+}],
+"loop": false,
+"name": &"Death",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oj0m5"]
+size = Vector2(29, 31)
 
 [node name="SnakeMob" type="CharacterBody2D"]
 collision_layer = 2
@@ -18,3 +52,38 @@ shape = SubResource("RectangleShape2D_oqh8k")
 [node name="GuardianSerpentOld" type="Sprite2D" parent="."]
 texture = ExtResource("2_5letq")
 metadata/_edit_lock_ = true
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -14.0
+offset_top = -20.0
+offset_right = 12.0
+offset_bottom = -17.0
+theme_override_styles/background = SubResource("StyleBoxFlat_cabko")
+theme_override_styles/fill = SubResource("StyleBoxFlat_v4mho")
+value = 50.0
+show_percentage = false
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_kmr3f")
+animation = &"Death"
+frame = 3
+frame_progress = 1.0
+
+[node name="PlayerDetection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection"]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_oj0m5")
+
+[node name="SnakeHead" type="Marker2D" parent="."]
+position = Vector2(-9, -11)
+
+[node name="Bullets" type="Node2D" parent="."]
+script = ExtResource("7_edeuw")
+
+[node name="ShootBullet" type="Timer" parent="."]
+autostart = true
+
+[connection signal="body_entered" from="PlayerDetection" to="." method="_on_player_detection_body_entered"]
+[connection signal="timeout" from="ShootBullet" to="." method="_on_shoot_bullet_timeout"]

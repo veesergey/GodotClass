@@ -25,14 +25,19 @@ func get_mob() -> Node:
 	return new_mob
 	
 func reset_mob(mob: Node) -> void:
-	mob.position = Vector2(-1000, -1000)
+	mob.global_position = Vector2(-1000, -1000)
 	mob.isAlive = false
-	mob.get_node("CollisionShape2D").disabled = false
+	mob.visible = false
+	mob.get_node("CollisionShape2D").disabled = true
 	mob.hide()
+	
 
 
 func _on_timer_timeout() -> void:
 	var mobTemp: Node = get_mob()
-	mobTemp.global_position = self.global_position
+	var randX: int = randi_range(-50, 50)
+	var randY: int = randi_range(-50, 50)
+
+	mobTemp.global_position = self.global_position + Vector2(randX, randY)
 	mobTemp.show()
 	pass # Replace with function body.
