@@ -36,4 +36,3 @@ func _physics_process(delta: float) -> void:
 			
 	velocity = inputDir * speed
 	move_and_slide()
-	print(inputDir)
